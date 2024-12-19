@@ -1,0 +1,68 @@
+create kubernetes cluster :
+=========================
+### FRIST WE HAVE TAKE T2.LARGE INSTANCE AND ATTACHED TO ROLE OR ACCESS KEY AND SECREATE ACCESS KEY PROVIDE THE ADMIN ACCESS EC2 FULL ACCESS .
+---------------------------------------------------
+apt update && apt install default-jdk -y && apt install maven -y && apt install apache2 -y && apt install awscli -y
+apt install docker.io -y
+sudo apt -y update
+sudo apt -y upgrade
+sudo apt -y install unzip curl
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+./aws/install
+------------------------------------------------------------------------------------------------------------
+create kubectl :
+==============
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl
+sudo mv kubectl /usr/local/bin
+kubectl version --client
+------------------------------
+install eksctl :
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
+eksctl version
+-------------------------------
+
+##  Create an EKS cluster with empty node group
+
+eksctl create cluster --name=sample-ekscluster --region=ap-south-1 --version 1.26 --zones=ap-south-1a,ap-south-1b --without-nodegroup 
+
+
+-------------------------------------------------
+## Create an EC2 key pair Or take existing key pair (your key pair name)
+## Create Node Group with additional Add-Ons in Public Subnets
+It will help us to create IAM policys automatically
+
+eksctl create nodegroup --cluster=sample-ekscluster \
+                       --region=ap-south-1 \
+                       --name=sample-ekscluster-ng-public1 \
+                       --node-type=t3.small \
+                       --nodes=2 \
+                       --nodes-min=2 \
+                       --nodes-max=4 \
+                       --node-volume-size=8 \
+                       --ssh-access \
+                       --ssh-public-key=klamsdksdnkjnc \
+                       --managed \
+                       --asg-access \
+                       --external-dns-access \
+                       --full-ecr-access \
+                       --appmesh-access \
+                       --alb-ingress-access 
+---------------------------------------------------------------------------------------------------
+## Create & Associate IAM OIDC Provider for our EKS Cluster
+To enable and use AWS IAM roles for Kubernetes service accounts on our EKS cluster, we must create & associate OIDC identity provider.
+
+eksctl utils associate-iam-oidc-provider --region ap-northeast-3 --cluster sample-ekscluster --approve
+
+-----------------------------------------------------------------------------------------------
+## Get the config for cluster 
+1.  aws eks update-kubeconfig --region ap-northeast-3 --name sample-ekscluster
+2.  kubectl get nodes 
+3.  kubectl get nodes -o wide 
+
+## Get capacity of pods for running in cluster 
+1. kubectl get node -o yaml | grep pods
+-------------------------------------------------------------------------------------
+------------------------------------------COMPLETE-------------------------------------------------------------------------------------- 
