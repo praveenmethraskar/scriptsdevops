@@ -1,0 +1,92 @@
+tomcat installiation:-
+==========
+sudo -i
+
+# we need to update the system
+
+apt update && apt install default-jdk -y
+
+ 
+# navigate into system folder like opt and etc 
+ 
+cd /opt
+
+## download tar file from browser
+
+wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.70/bin/apache-tomcat-9.0.70.tar.gz
+
+untar the tar file from browser
+tar -xvzf apache-tomcat-9.0.70.tar.gz
+
+ rename the untar file like tomcat
+ mv apache-tomcat-9.0.70 tomcat
+ 
+# remove the tar file 
+ rm -rf apache-tomcat-9.0.70.tar.gz
+ 
+ cd tomcat
+  
+checking the folders and files 
+
+ls
+
+next navigate into bin folder
+
+ cd bin
+ 
+ ls 
+ then excute below command 
+
+ ./startup.sh
+ 
+ tomcat running on 8080 
+ 
+=========================================================================================
+ 
+vi /opt/tomcat/webapps/host-manager/META-INF/context.xml
+ 
+ <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
+  <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
+</Context>
+ 
+ Rearragngemet :-
+ ===============
+ 
+ <!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+==============================================================================================================================
+
+ 
+ vi /opt/tomcat/webapps/manager/META-INF/context.xml
+ 
+<Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
+  <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
+</Context>
+ 
+ Rearragngemet :-
+ =================================================================================================================================
+ 
+ <!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+==================================================================================================================================
+		
+ cd  conf/
+ 
+ vi tomcat-users.xml
+ 
+<role rolename="manager-gui"/>
+	<role rolename="manager-script"/>
+	<role rolename="manager-jmx"/>
+	<role rolename="manager-status"/>
+<user username="admin" password="admin" roles="manager-gui, manager-script, manager-jmx, manager-status"/>
+<user username="deployer" password="deployer" roles="manager-script"/>
+<user username="tomcat" password="s3cret" roles="manager-gui"/>
+================================================================================================================================
+cd ..
+cd bin
+./shutdown.sh
+./startup.sh
+
+server running on 8080
