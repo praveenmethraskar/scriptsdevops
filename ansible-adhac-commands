@@ -3,7 +3,9 @@ sudo apt install software-properties-common
 sudo add-apt-repository --yes --update ppa:ansible/ansible
 sudo apt install ansible
 
--------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-20-04
+---------------------------------------------------------------------------------------------------------
 sudo apt-add-repository ppa:ansible/ansible
 sudo apt update
 sudo apt install ansible
@@ -17,11 +19,11 @@ server3 ansible_host=203.0.113.113
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
-------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
 
 ansible all -m ping -u root
 
------------------------------------------------
+----------------------------------------------------------------------------------------------------------
 
 
 ansible webservers -m user -a "name=web group=weblogic createhome=yes" -b : to create user and also attache to create group
