@@ -43,7 +43,7 @@ eksctl create nodegroup --cluster=sample-ekscluster \
                        --nodes-max=4 \
                        --node-volume-size=8 \
                        --ssh-access \
-                       --ssh-public-key=klamsdksdnkjnc \
+                       --ssh-public-key=ppnew \
                        --managed \
                        --asg-access \
                        --external-dns-access \
@@ -54,11 +54,11 @@ eksctl create nodegroup --cluster=sample-ekscluster \
 ## Create & Associate IAM OIDC Provider for our EKS Cluster
 To enable and use AWS IAM roles for Kubernetes service accounts on our EKS cluster, we must create & associate OIDC identity provider.
 
-eksctl utils associate-iam-oidc-provider --region ap-northeast-3 --cluster sample-ekscluster --approve
+eksctl utils associate-iam-oidc-provider --region ap-south-1 --cluster sample-ekscluster --approve
 
 -----------------------------------------------------------------------------------------------
 ## Get the config for cluster 
-1.  aws eks update-kubeconfig --region ap-northeast-3 --name sample-ekscluster
+1.  aws eks update-kubeconfig --region ap-south-1 --name sample-ekscluster
 2.  kubectl get nodes 
 3.  kubectl get nodes -o wide 
 
