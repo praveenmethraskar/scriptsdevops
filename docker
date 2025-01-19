@@ -10,3 +10,6 @@ sudo chown -R jenkins:jenkins /path/to/your/directory
 sudo chmod -R 775 /path/to/your/directory
 ls -l /var/run/docker.sock
 sudo chgrp docker /var/run/docker.sock
+
+sudo chmod 666 /var/run/docker.sock
+
