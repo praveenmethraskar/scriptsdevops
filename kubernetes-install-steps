@@ -43,7 +43,7 @@ eksctl create nodegroup --cluster=sample-ekscluster \
                        --nodes-max=4 \
                        --node-volume-size=8 \
                        --ssh-access \
-                       --ssh-public-key=ppnew \
+                       --ssh-public-key=newkeypair \
                        --managed \
                        --asg-access \
                        --external-dns-access \
